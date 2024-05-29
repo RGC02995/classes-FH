@@ -1,16 +1,24 @@
 import { useFetch } from "../hooks/useFetch";
 import { useCounter } from "../hooks/useCounter";
-import { LoadingMessage } from "./LoadingMessage";
-import { PokemonCard } from "./PokemonCard";
+import { LoadingMessage } from "../03-examples/LoadingMessage";
+import { PokemonCard } from "../03-examples/PokemonCard";
+import { useLayoutEffect, useRef } from "react";
 
-export const MultipleCustomHooks = () => {
-  const { decrement, increment, reset, counter } = useCounter();
-  const { data, isLoading, hasError } = useFetch(
+export const Layout = () => {
+  const h1Ref = useRef();
+
+  useLayoutEffect(() => {
+    //Para ver el tamaño exacto del componente
+    console.log(h1Ref.current.getBoundingClientRect());
+  }, []);
+
+  const { decrement, increment, counter } = useCounter();
+  const { data, isLoading } = useFetch(
     `https://pokeapi.co/api/v2/pokemon/${counter}`
   );
   return (
     <>
-      <h1>Info Pokémon</h1>
+      <h1 ref={h1Ref}>Info Pokémon</h1>
       <hr />
 
       {isLoading ? (
